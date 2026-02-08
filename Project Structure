@@ -1,0 +1,6 @@
+jenkins-aws-cicd-project/
+│
+├── index.html
+├── style.css
+├── Jenkinsfile
+└── README.md
