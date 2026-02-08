@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_DEFAULT_REGION = 'ap-south-1'
+        S3_BUCKET = 'your-bucket-name'
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-username/jenkins-aws-cicd-project.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Static website - No build required'
+            }
+        }
+
+        stage('Deploy to S3') {
+            steps {
+                sh 'aws s3 sync . s3://$S3_BUCKET --delete'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment Successful!'
+        }
+        failure {
+            echo 'Deployment Failed!'
+        }
+    }
+}
